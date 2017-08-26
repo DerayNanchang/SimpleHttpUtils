@@ -10,5 +10,5 @@ public interface HttpSimpleListResponse<T, E> {
 
     void onAccept(List<T> t);
 
-    void onError(List<E> e);
+    void onError(E e);
 }
