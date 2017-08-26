@@ -1,7 +1,6 @@
 package com.deray.http.http.retrofit;
 
 import android.text.TextUtils;
-
 import com.alibaba.fastjson.JSON;
 import com.deray.http.http.retrofit.httpResponse.HttpSimpleCallResponse;
 import com.deray.http.http.retrofit.httpResponse.HttpSimpleListCallResponse;
@@ -9,9 +8,7 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
-
 import java.io.IOException;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import okhttp3.ResponseBody;
