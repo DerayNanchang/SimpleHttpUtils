@@ -4,13 +4,13 @@ import android.content.Context;
 
 import com.deray.http.http.config.HttpConfig;
 import com.deray.http.http.config.HttpRetrofitConfig;
+import com.deray.http.http.fastjsonUtils.FastJsonConverterFactory;
 import com.deray.http.http.gsonUtils.GsonBuilderUtil;
 import com.deray.http.http.retrofit.okHttp.OkHttpConfig;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Deray on 2017/5/4.
@@ -59,7 +59,8 @@ public class RetrofitConfig {
 
     private Retrofit getBuild(String baseUrl, Gson gson, Retrofit.Builder builder) {
         return builder.baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(FastJsonConverterFactory.create())
+                //.addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
