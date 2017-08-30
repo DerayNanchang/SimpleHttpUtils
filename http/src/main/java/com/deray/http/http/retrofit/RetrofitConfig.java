@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Deray on 2017/5/4.
@@ -29,19 +30,22 @@ public class RetrofitConfig {
     }
 
     public Retrofit getSimpleRetrofit(String baseUrl, Context context) {
-        return getRetrofit(baseUrl, context, HttpRetrofitConfig.KEY_SIMPLE, null);
+        return getRetrofit(baseUrl, context, HttpRetrofitConfig.KEY_SIMPLE, null, false);
     }
 
-    public Retrofit getNormRetrofit(String baseUrl, Context context, HttpConfig httpConfig) {
-        return getRetrofit(baseUrl, context, HttpRetrofitConfig.KEY_NORM, httpConfig);
+    public Retrofit getNormRetrofit(String baseUrl, Context context, HttpConfig httpConfig, boolean isGson) {
+        return getRetrofit(baseUrl, context, HttpRetrofitConfig.KEY_NORM, httpConfig, isGson);
     }
 
     public Retrofit getOnlyRetrofit(String baseUrl) {
-        return getRetrofit(baseUrl, null, HttpRetrofitConfig.KEY_ONLY, null);
+        return getRetrofit(baseUrl, null, HttpRetrofitConfig.KEY_ONLY, null, false);
     }
 
-    private Retrofit getRetrofit(String baseUrl, Context context, int type, HttpConfig httpConfig) {
-        Gson gson = GsonBuilderUtil.create();
+    private Retrofit getRetrofit(String baseUrl, Context context, int type, HttpConfig httpConfig, boolean isGson) {
+        Gson gson = null;
+        if (isGson) {
+            gson = GsonBuilderUtil.create();
+        }
         Retrofit.Builder builder = new Retrofit.Builder();
         switch (type) {
             case HttpRetrofitConfig.KEY_ONLY:
@@ -59,8 +63,7 @@ public class RetrofitConfig {
 
     private Retrofit getBuild(String baseUrl, Gson gson, Retrofit.Builder builder) {
         return builder.baseUrl(baseUrl)
-                .addConverterFactory(FastJsonConverterFactory.create())
-                //.addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(gson != null ? GsonConverterFactory.create() : FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
