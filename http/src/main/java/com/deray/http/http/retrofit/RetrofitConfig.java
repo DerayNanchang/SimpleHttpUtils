@@ -3,7 +3,7 @@ package com.deray.http.http.retrofit;
 import android.content.Context;
 
 import com.deray.http.http.config.HttpConfig;
-import com.deray.http.http.config.HttpRetrofitConfig;
+import com.deray.http.http.config.HttpConstant;
 import com.deray.http.http.fastjsonUtils.FastJsonConverterFactory;
 import com.deray.http.http.gsonUtils.GsonBuilderUtil;
 import com.deray.http.http.retrofit.okHttp.OkHttpConfig;
@@ -30,15 +30,15 @@ public class RetrofitConfig {
     }
 
     public Retrofit getSimpleRetrofit(String baseUrl, Context context) {
-        return getRetrofit(baseUrl, context, HttpRetrofitConfig.KEY_SIMPLE, null, false);
+        return getRetrofit(baseUrl, context, HttpConstant.KEY_SIMPLE, null, false);
     }
 
     public Retrofit getNormRetrofit(String baseUrl, Context context, HttpConfig httpConfig, boolean isGson) {
-        return getRetrofit(baseUrl, context, HttpRetrofitConfig.KEY_NORM, httpConfig, isGson);
+        return getRetrofit(baseUrl, context, HttpConstant.KEY_NORM, httpConfig, isGson);
     }
 
     public Retrofit getOnlyRetrofit(String baseUrl) {
-        return getRetrofit(baseUrl, null, HttpRetrofitConfig.KEY_ONLY, null, false);
+        return getRetrofit(baseUrl, null, HttpConstant.KEY_ONLY, null, false);
     }
 
     private Retrofit getRetrofit(String baseUrl, Context context, int type, HttpConfig httpConfig, boolean isGson) {
@@ -48,12 +48,12 @@ public class RetrofitConfig {
         }
         Retrofit.Builder builder = new Retrofit.Builder();
         switch (type) {
-            case HttpRetrofitConfig.KEY_ONLY:
+            case HttpConstant.KEY_ONLY:
                 return builder.baseUrl(baseUrl).build();
-            case HttpRetrofitConfig.KEY_SIMPLE:
+            case HttpConstant.KEY_SIMPLE:
                 builder.client(new OkHttpConfig(context, null).getOkHttpClient());
                 return getBuild(baseUrl, gson, builder);
-            case HttpRetrofitConfig.KEY_NORM:
+            case HttpConstant.KEY_NORM:
                 builder.client(new OkHttpConfig(context, httpConfig).getOkHttpClient());
                 return getBuild(baseUrl, gson, builder);
             default:
