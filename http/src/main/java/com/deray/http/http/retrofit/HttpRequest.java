@@ -1,6 +1,7 @@
 package com.deray.http.http.retrofit;
 
 import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.deray.http.http.retrofit.httpResponse.HttpSimpleCallResponse;
 import com.deray.http.http.retrofit.httpResponse.HttpSimpleListCallResponse;
@@ -8,7 +9,9 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+
 import java.io.IOException;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import okhttp3.ResponseBody;
@@ -30,12 +33,18 @@ public class HttpRequest {
     public static HttpRequest getInstance() {
         return simpleDerayHttp;
     }
+
     private final ObservableTransformer ot = new RxjavaObConfig();
+
+    public <T> Observable<T> accept(Observable<T> observable) {
+        return observable.compose(ot);
+    }
 
     public <T> Observable<T> accept(Observable<T> observable, RxAppCompatActivity activity) {
         Observable compose = observable.compose(ot);
         return compose.compose(activity.<T>bindUntilEvent(ActivityEvent.DESTROY));
     }
+
     public <T> Observable<T> accept(Observable<T> observable, RxFragment fragment) {
         Observable compose = observable.compose(ot);
         return compose.compose(fragment.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
