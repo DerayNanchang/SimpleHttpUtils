@@ -1,7 +1,5 @@
 package com.deray.http.http.retrofit;
 
-import android.content.Context;
-
 import com.deray.http.http.config.HttpConfig;
 import com.deray.http.http.config.HttpConstant;
 import com.deray.http.http.fastjsonUtils.FastJsonConverterFactory;
@@ -10,6 +8,7 @@ import com.deray.http.http.retrofit.okHttp.OkHttpConfig;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import okhttp3.Cache;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -29,19 +28,19 @@ public class RetrofitConfig {
         return RetrofitConfig.http;
     }
 
-    public Retrofit getSimpleRetrofit(String baseUrl, Context context) {
-        return getRetrofit(baseUrl, context, HttpConstant.KEY_SIMPLE, null, false);
+    public Retrofit getSimpleRetrofit(String baseUrl) {
+        return getRetrofit(baseUrl, null, HttpConstant.KEY_SIMPLE, null, false);
     }
 
-    public Retrofit getNormRetrofit(String baseUrl, Context context, HttpConfig httpConfig, boolean isGson) {
-        return getRetrofit(baseUrl, context, HttpConstant.KEY_NORM, httpConfig, isGson);
+    public Retrofit getNormRetrofit(String baseUrl, Cache cache, HttpConfig httpConfig, boolean isGson) {
+        return getRetrofit(baseUrl, cache, HttpConstant.KEY_NORM, httpConfig, isGson);
     }
 
     public Retrofit getOnlyRetrofit(String baseUrl) {
         return getRetrofit(baseUrl, null, HttpConstant.KEY_ONLY, null, false);
     }
 
-    private Retrofit getRetrofit(String baseUrl, Context context, int type, HttpConfig httpConfig, boolean isGson) {
+    private Retrofit getRetrofit(String baseUrl, Cache cache, int type, HttpConfig httpConfig, boolean isGson) {
         Gson gson = null;
         if (isGson) {
             gson = GsonBuilderUtil.create();
@@ -51,10 +50,10 @@ public class RetrofitConfig {
             case HttpConstant.KEY_ONLY:
                 return builder.baseUrl(baseUrl).build();
             case HttpConstant.KEY_SIMPLE:
-                builder.client(new OkHttpConfig(context, null).getOkHttpClient());
+                builder.client(new OkHttpConfig(null).getOkHttpClient());
                 return getBuild(baseUrl, gson, builder);
             case HttpConstant.KEY_NORM:
-                builder.client(new OkHttpConfig(context, httpConfig).getOkHttpClient());
+                builder.client(new OkHttpConfig(httpConfig).getOkHttpClient(cache));
                 return getBuild(baseUrl, gson, builder);
             default:
                 return null;

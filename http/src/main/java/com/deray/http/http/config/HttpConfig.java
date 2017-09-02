@@ -2,7 +2,6 @@ package com.deray.http.http.config;
 
 import android.content.Context;
 
-import java.io.File;
 import java.io.Serializable;
 
 import okhttp3.Cache;
@@ -31,12 +30,24 @@ public class HttpConfig implements Serializable {
     public static final int INTERCEPTOR = 1;
     public static final int NETWORK_INTERCEPTOR = 2;
     private int interceptorType;
+    private Cache cache;
 
     private static final String CACHE_DIR_NAME = "httpCache";
     private String cacheDirName;
-    private Cache cache;
 
-    public HttpConfig(Context context) {
+    public HttpConfig() {
+        setMemoryCache(false);
+        setMemoryCacheTime(DEFAULT_MEMORY_CACHE_TIME);
+        setDiskCache(false);
+        setDiskCacheTime(DEFAULT_DISK_CACHE_TIME);
+        setMaxDiskCache(DEFAULT_MAX_DISK_CACHE);
+        setNotNetCacheTime(DEFAULT_NOT_NET_CACHE_TIME);
+        setInterceptorType(INTERCEPTOR);
+        setConnectTimeOut(DEFAULT_CONNECT_TIME_OUT);
+        setRetryOnConnectionFailure(true);
+    }
+
+    public HttpConfig(Cache cache) {
         setMemoryCache(false);
         setMemoryCacheTime(DEFAULT_MEMORY_CACHE_TIME);
         setDiskCache(false);
@@ -47,7 +58,7 @@ public class HttpConfig implements Serializable {
         setConnectTimeOut(DEFAULT_CONNECT_TIME_OUT);
         setRetryOnConnectionFailure(true);
         this.context = context.getApplicationContext();
-        setCache(cacheDirName);
+        setCache(cache);
     }
 
     public int getInterceptorType() {
@@ -70,9 +81,9 @@ public class HttpConfig implements Serializable {
         return this.cache;
     }
 
-    public void setCache(String cacheDirName) {
-
-        this.cache = new Cache(new File(context.getCacheDir(), cacheDirName == null ? CACHE_DIR_NAME : cacheDirName), getMaxDiskCache());
+    public void setCache(Cache cache) {
+        this.cache = cache;
+        //this.cache = new Cache(new File(context.getCacheDir(), cacheDirName == null ? context.getPackageName() + CACHE_DIR_NAME : cacheDirName), getMaxDiskCache());
     }
 
     public boolean isDiskCache() {
