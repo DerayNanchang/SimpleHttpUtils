@@ -37,13 +37,13 @@ public class OkHttpConfig {
             httpConfig = new HttpConfig();
         }
 
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)            // 设置日志信息
                 .retryOnConnectionFailure(httpConfig.isRetryOnConnectionFailure())         // 是否重连
-                .connectTimeout(httpConfig.getConnectTimeOut(), TimeUnit.SECONDS);   // 超时时间
-        OkHttpClient client = interceptorType(builder, httpConfig.getInterceptorType()).build();
+                .connectTimeout(httpConfig.getConnectTimeOut(), TimeUnit.SECONDS)
+                .build();   // 超时时间
+        //OkHttpClient client = interceptorType(builder, httpConfig.getInterceptorType()).build();
 
-        return client;
     }
 
     public OkHttpClient getOkHttpClient(Cache cache) {
@@ -57,7 +57,7 @@ public class OkHttpConfig {
         if (httpConfig == null) {
             httpConfig = new HttpConfig();
         }
-        if (cache == null){
+        if (cache == null) {
             try {
                 throw new Exception("cache is null");
             } catch (Exception e) {

@@ -54,7 +54,7 @@ public class HttpConfig implements Serializable {
         setDiskCacheTime(DEFAULT_DISK_CACHE_TIME);
         setMaxDiskCache(DEFAULT_MAX_DISK_CACHE);
         setNotNetCacheTime(DEFAULT_NOT_NET_CACHE_TIME);
-        setInterceptorType(INTERCEPTOR);
+        setInterceptorType(NETWORK_INTERCEPTOR);
         setConnectTimeOut(DEFAULT_CONNECT_TIME_OUT);
         setRetryOnConnectionFailure(true);
         this.context = context.getApplicationContext();
