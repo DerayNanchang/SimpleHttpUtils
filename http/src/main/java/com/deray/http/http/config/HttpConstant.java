@@ -8,4 +8,5 @@ public class HttpConstant {
     public static final int KEY_SIMPLE = 0;
     public static final int KEY_NORM = 1;
     public static final int KEY_ONLY = 2;
+    public static final int KEY_HEADER = 3;
 }

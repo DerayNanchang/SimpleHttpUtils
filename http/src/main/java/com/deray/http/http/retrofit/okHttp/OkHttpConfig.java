@@ -3,7 +3,9 @@ package com.deray.http.http.retrofit.okHttp;
 import com.deray.http.http.DebugUtils.DebugUtil;
 import com.deray.http.http.config.HttpConfig;
 import com.deray.http.http.interceptor.HttpStandardInterceptor;
+import com.deray.http.http.interceptor.addHeaderInterceptor;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -38,12 +40,32 @@ public class OkHttpConfig {
         }
 
         return new OkHttpClient.Builder()
-                .addInterceptor(interceptor)            // 设置日志信息
+                .addInterceptor(interceptor)
                 .retryOnConnectionFailure(httpConfig.isRetryOnConnectionFailure())         // 是否重连
                 .connectTimeout(httpConfig.getConnectTimeOut(), TimeUnit.SECONDS)
                 .build();   // 超时时间
-        //OkHttpClient client = interceptorType(builder, httpConfig.getInterceptorType()).build();
+    }
 
+    public OkHttpClient getOkHttpClient(List<String> header) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                DebugUtil.error(message);
+            }
+        });
+
+        if (httpConfig == null) {
+            httpConfig = new HttpConfig();
+        }
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .addInterceptor(interceptor);// 设置日志信息
+        if (header != null) {
+            builder = builder.addInterceptor(new addHeaderInterceptor(header));
+        }
+        return builder.retryOnConnectionFailure(httpConfig.isRetryOnConnectionFailure())         // 是否重连
+                .connectTimeout(httpConfig.getConnectTimeOut(), TimeUnit.SECONDS)
+                .build();   // 超时时间
     }
 
     public OkHttpClient getOkHttpClient(Cache cache) {
