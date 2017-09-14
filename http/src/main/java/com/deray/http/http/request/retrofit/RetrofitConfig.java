@@ -1,10 +1,10 @@
-package com.deray.http.http.retrofit;
+package com.deray.http.http.request.retrofit;
 
 import com.deray.http.http.config.HttpConfig;
 import com.deray.http.http.config.HttpConstant;
-import com.deray.http.http.fastjsonUtils.FastJsonConverterFactory;
-import com.deray.http.http.gsonUtils.GsonBuilderUtil;
-import com.deray.http.http.retrofit.okHttp.OkHttpConfig;
+import com.deray.http.http.utils.fastjson.FastJsonConverterFactory;
+import com.deray.http.http.utils.gson.GsonBuilderUtil;
+import com.deray.http.http.request.okhttp.OkHttpConfig;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 

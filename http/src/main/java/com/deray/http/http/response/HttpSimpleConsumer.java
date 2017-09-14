@@ -1,4 +1,4 @@
-package com.deray.http.http.rx;
+package com.deray.http.http.response;
 
 
 import io.reactivex.annotations.NonNull;

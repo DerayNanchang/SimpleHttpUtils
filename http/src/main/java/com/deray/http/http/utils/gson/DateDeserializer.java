@@ -1,4 +1,4 @@
-package com.deray.http.http.gsonUtils;
+package com.deray.http.http.utils.gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;

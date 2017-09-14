@@ -1,4 +1,4 @@
-package com.deray.http.http.retrofit.httpResponse;
+package com.deray.http.http.response.api;
 
 /**
  * Created by Deray on 2017/5/4.

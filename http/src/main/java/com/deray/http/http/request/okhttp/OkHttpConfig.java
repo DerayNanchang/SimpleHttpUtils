@@ -1,6 +1,6 @@
-package com.deray.http.http.retrofit.okHttp;
+package com.deray.http.http.request.okhttp;
 
-import com.deray.http.http.DebugUtils.DebugUtil;
+import com.deray.http.http.utils.debug.DebugUtil;
 import com.deray.http.http.config.HttpConfig;
 import com.deray.http.http.interceptor.HttpStandardInterceptor;
 import com.deray.http.http.interceptor.addHeaderInterceptor;

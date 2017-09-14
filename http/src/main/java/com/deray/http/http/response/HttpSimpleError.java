@@ -1,4 +1,4 @@
-package com.deray.http.http.retrofit;
+package com.deray.http.http.response;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -19,22 +19,22 @@ public class HttpSimpleError {
         if (throwable != null) {
             if (throwable instanceof UnknownHostException) {
                 //提示log 按公司需求
-                showToast(context, "请打开网络" + throwable.getMessage() + "");
+                showToast(context, "Please open the network" + throwable.getMessage() + "");
             } else if (throwable instanceof SocketTimeoutException) {
-                showToast(context, "请求超时" + throwable.getMessage() + "");
+                showToast(context, "The request timeout" + throwable.getMessage() + "");
             } else if (throwable instanceof ConnectException) {
-                showToast(context, "连接失败" + throwable.getMessage() + "");
+                showToast(context, "The connection failed" + throwable.getMessage() + "");
             } else if (throwable instanceof HttpException) {
-                showToast(context, "请求超时" + throwable.getMessage() + "");
+                showToast(context, "The request timeout" + throwable.getMessage() + "");
             } else {
                 if (throwable.getMessage() != null) {
-                    showToast(context, "未知错误：" + throwable.getMessage() + "");
+                    showToast(context, "An unknown error" + throwable.getMessage() + "");
                 } else {
-                    showToast(context, "请求失败 服务器返回数据异常" + "");
+                    showToast(context, "request failed . message is empty in response" + "");
                 }
             }
         } else {
-            showToast(context, "请求失败 服务器返回数据异常" + "");
+            showToast(context, "request failed .  throwable is empty in response" + "");
         }
     }
 

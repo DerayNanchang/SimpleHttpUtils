@@ -1,4 +1,4 @@
-package com.deray.http.http.retrofit;
+package com.deray.http.http.request.rxjava;
 
 import com.deray.http.http.config.HttpConfig;
 

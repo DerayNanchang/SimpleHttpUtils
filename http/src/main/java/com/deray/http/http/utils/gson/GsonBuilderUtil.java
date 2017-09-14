@@ -1,4 +1,4 @@
-package com.deray.http.http.gsonUtils;
+package com.deray.http.http.utils.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,10 +1,11 @@
-package com.deray.http.http.retrofit;
+package com.deray.http.http.request;
 
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.deray.http.http.retrofit.httpResponse.HttpSimpleCallResponse;
-import com.deray.http.http.retrofit.httpResponse.HttpSimpleListCallResponse;
+import com.deray.http.http.response.api.HttpSimpleCallResponse;
+import com.deray.http.http.response.api.HttpSimpleListCallResponse;
+import com.deray.http.http.request.rxjava.RxjavaObConfig;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -48,6 +49,26 @@ public class HttpRequest {
     public <T> Observable<T> accept(Observable<T> observable, RxFragment fragment) {
         Observable compose = observable.compose(ot);
         return compose.compose(fragment.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+    }
+
+    public void accept(Call<ResponseBody> call, final HttpSimpleCallResponse<String, Throwable> responses) {
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response != null) {
+                        responses.onAccept(response.body().string());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                responses.onError(t);
+            }
+        });
     }
 
     public <T> void accept(Call<ResponseBody> call, final Class<T> clazz, final HttpSimpleListCallResponse<T, Throwable> httpSimpleCallResponse) {

@@ -1,4 +1,4 @@
-package com.deray.http.http.DebugUtils;
+package com.deray.http.http.utils.debug;
 
 import android.content.Context;
 import android.util.Log;

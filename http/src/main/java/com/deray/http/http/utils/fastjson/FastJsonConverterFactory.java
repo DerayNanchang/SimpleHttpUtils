@@ -1,4 +1,4 @@
-package com.deray.http.http.fastjsonUtils;
+package com.deray.http.http.utils.fastjson;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

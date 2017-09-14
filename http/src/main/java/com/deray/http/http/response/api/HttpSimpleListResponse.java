@@ -1,4 +1,4 @@
-package com.deray.http.http.retrofit.httpResponse;
+package com.deray.http.http.response.api;
 
 import java.util.List;
 
