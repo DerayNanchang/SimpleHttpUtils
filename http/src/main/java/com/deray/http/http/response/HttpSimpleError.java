@@ -18,7 +18,6 @@ public class HttpSimpleError {
     public static void httpSimpleErrorDisposeCenter(Context context, Throwable throwable) {
         if (throwable != null) {
             if (throwable instanceof UnknownHostException) {
-                //提示log 按公司需求
                 showToast(context, "Please open the network" + throwable.getMessage() + "");
             } else if (throwable instanceof SocketTimeoutException) {
                 showToast(context, "The request timeout" + throwable.getMessage() + "");
