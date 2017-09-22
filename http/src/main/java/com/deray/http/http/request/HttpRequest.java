@@ -3,9 +3,9 @@ package com.deray.http.http.request;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.deray.http.http.request.rxjava.RxjavaObConfig;
 import com.deray.http.http.response.api.HttpSimpleCallResponse;
 import com.deray.http.http.response.api.HttpSimpleListCallResponse;
-import com.deray.http.http.request.rxjava.RxjavaObConfig;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -57,7 +57,11 @@ public class HttpRequest {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response != null) {
-                        responses.onAccept(response.body().string());
+                        if (response.body() != null) {
+                            responses.onAccept(response.body().string());
+                        } else {
+                            System.out.println("body in response is null");
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
